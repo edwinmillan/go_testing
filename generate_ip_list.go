@@ -1,11 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math/rand"
-	"time"
 	"os"
-	"bufio"
+	"time"
 )
 
 func checkError(err error) {
@@ -35,14 +35,14 @@ func octet() int {
 	return choice
 }
 
-func generateIpAddress() string {
+func generateIPAddress() string {
 	return fmt.Sprintf("%d.%d.%d.%d\n", octet(), octet(), octet(), octet())
 }
 
-func generateIpAddresses(total int) []string {
+func generateIPAddresses(total int) []string {
 	ipAddresses := []string{}
 	for i := 0; i < total; i++ {
-		ipAddresses = append(ipAddresses, generateIpAddress())
+		ipAddresses = append(ipAddresses, generateIPAddress())
 	}
 	return ipAddresses
 }
@@ -64,7 +64,7 @@ func deduplicate(sourceSlice []string) []string {
 				// Update the deduplicated slice with the unique entry
 				deduplicatedSlice = append(deduplicatedSlice, entry)
 			} else {
-				sourceSlice = append(sourceSlice, generateIpAddress())
+				sourceSlice = append(sourceSlice, generateIPAddress())
 			}
 		}
 	}
@@ -91,7 +91,7 @@ func main() {
 	rand.Seed(time.Now().Unix())
 
 	fmt.Println("Generating Unique IP's")
-	deduplicatedIps := deduplicate(generateIpAddresses(500000))
+	deduplicatedIps := deduplicate(generateIPAddresses(500000))
 
 	writeToFile(deduplicatedIps)
 	fmt.Println("Done.")
