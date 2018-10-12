@@ -110,3 +110,5 @@ venv.bak/
 *.txt
 
 ._*.go
+
+debug
