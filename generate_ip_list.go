@@ -14,6 +14,37 @@ func checkError(err error) {
 	}
 }
 
+type set struct {
+	content map[string]struct{}
+}
+
+func (self set) add(str string) {
+	self.content[str] = struct{}{}
+}
+
+func (self set) has(str string) bool {
+	_, ok := self.content[str]
+	return ok
+}
+
+func (self set) len() int {
+	return len(self.content)
+}
+
+func (self set) entries() []string {
+	keys := make([]string, 0, self.len())
+	for key := range self.content {
+		keys = append(keys, key)
+	}
+	return keys
+}
+
+func newSet() set {
+	s := set{}
+	s.content = make(map[string]struct{})
+	return s
+}
+
 func numberRange(min, max int) []int {
 	// Make a slice as big as your total number of slots
 	integerRange := make([]int, max-min+1)
@@ -40,36 +71,12 @@ func generateIPAddress() string {
 }
 
 func generateIPAddresses(total int) []string {
-	ipAddresses := []string{}
-	for i := 0; i < total; i++ {
-		ipAddresses = append(ipAddresses, generateIPAddress())
+	ipAddresses := newSet()
+	for ipAddresses.len() < total {
+		ip := generateIPAddress()
+		ipAddresses.add(ip)
 	}
-	return ipAddresses
-}
-
-func deduplicate(sourceSlice []string) []string {
-	// Make a Map to hold all your entries and a "added" boolean flag
-	sourceLength := len(sourceSlice)
-	entryMap := make(map[string]bool)
-	// Collector slice to store the good values in
-	deduplicatedSlice := []string{}
-
-	for len(deduplicatedSlice) < sourceLength {
-
-		for _, entry := range sourceSlice {
-			// Discard the Key, and check if the entry has been addedToSlice previously.
-			if _, addedToSlice := entryMap[entry]; !addedToSlice {
-				// Mark the entry as having been added previously
-				entryMap[entry] = true
-				// Update the deduplicated slice with the unique entry
-				deduplicatedSlice = append(deduplicatedSlice, entry)
-			} else {
-				sourceSlice = append(sourceSlice, generateIPAddress())
-			}
-		}
-	}
-
-	return deduplicatedSlice
+	return ipAddresses.entries()
 }
 
 func writeToFile(stringSlice []string) {
@@ -91,9 +98,8 @@ func main() {
 	rand.Seed(time.Now().Unix())
 
 	fmt.Println("Generating Unique IP's")
-	deduplicatedIps := deduplicate(generateIPAddresses(500000))
 
-	writeToFile(deduplicatedIps)
+	writeToFile(generateIPAddresses(50000))
 	fmt.Println("Done.")
 
 }
