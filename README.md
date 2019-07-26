@@ -12,7 +12,7 @@ I am using it as a way to get familiar with Go using my experience in Python to 
 
 ### Initial Baseline
 
-Go 1.12.5:
+Go 1.12.5: 0057033bc2e6955d24d219bc4e4ea04cfc1db03b
 `go run generate_ip_list.go  7.02s user 0.32s system 191% cpu 3.830 total`
 
 Python 3.7:
@@ -20,5 +20,5 @@ Python 3.7:
 
 
 ### Refactored Baseline
-Go 1.12.5:
+Go 1.12.5: 7f9b9e8bf56084bcee6a0a6d7d6b0efb1c8ab842
 `go run generate_ip_list.go  0.52s user 0.25s system 114% cpu 0.673 total`
