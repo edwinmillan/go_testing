@@ -17,3 +17,8 @@ Go 1.11.1:
 
 Python 3.7:
 `python generate_ip_list.py  3.64s user 0.11s system 98% cpu 3.798 total`
+
+
+### Refactored Baseline
+Go 1.12.5:
+`go run generate_ip_list.go  0.52s user 0.25s system 114% cpu 0.673 total`
